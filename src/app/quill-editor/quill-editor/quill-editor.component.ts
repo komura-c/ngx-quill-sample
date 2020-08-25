@@ -2,6 +2,12 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
+import 'quill-mention';
+import 'quill-emoji';
+
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize-module';
+Quill.register('modules/imageResize', ImageResize);
 
 @Component({
   selector: 'app-quill-editor',
@@ -20,10 +26,19 @@ export class QuillEditorComponent implements OnInit {
 
   quillEditorRef: any;
   quillFileInput = document.createElement('input');
+
+  atValues = [
+    { id: 1, value: 'komura', link: 'https://google.com' },
+    { id: 2, value: 'nino' },
+    { id: 3, value: 'goto' },
+    { id: 4, value: 'saito' }
+  ];
+  hashValues = [
+    { id: 5, value: 'komura 2' },
+    { id: 6, value: 'goto 2' }
+  ];
+
   modules = {
-    // 'emoji-shortname': true,
-    // 'emoji-textarea': true,
-    // 'emoji-toolbar': true,
     toolbar: {
       container: [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -44,8 +59,8 @@ export class QuillEditorComponent implements OnInit {
 
         ['clean'],                                         // remove formatting button
 
-        ['link', 'image', 'video']                         // link and image, video
-        // ['emoji']
+        ['link', 'image', 'video'],                         // link and image, video
+        ['emoji']
       ],
       handlers: {
         image: (isEmit: boolean) => {
@@ -56,6 +71,52 @@ export class QuillEditorComponent implements OnInit {
               this.quillFileUpload(event);
             });
             this.quillFileInput.click();
+          }
+        }
+      }
+    },
+    imageResize: true,
+    'emoji-shortname': true,
+    'emoji-textarea': true,
+    'emoji-toolbar': true,
+    mention: {
+      allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+      mentionDenotationChars: ['@', '#'],
+      source: (searchTerm, renderList, mentionChar) => {
+        let values;
+        if (mentionChar === '@') {
+          values = this.atValues;
+        } else {
+          values = this.hashValues;
+        }
+        if (searchTerm.length === 0) {
+          renderList(values, searchTerm);
+        } else {
+          const matches = [];
+          for (const i of values.length) {
+            if (values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())) {
+              matches.push(values[i]);
+            }
+          }
+          renderList(matches, searchTerm);
+        }
+      },
+    },
+    keyboard: {
+      bindings: {
+        shiftEnter: {
+          key: 13,
+          shiftKey: true,
+          handler: (range, context) => {
+            // Handle shift+enter
+            console.log('shift+enter');
+          }
+        },
+        enter: {
+          key: 13,
+          handler: (range, context) => {
+            console.log('enter');
+            return true;
           }
         }
       }
@@ -120,6 +181,7 @@ export class QuillEditorComponent implements OnInit {
         // downloadURLPromise.then((downloadURL) => {
         //   this.quillEditorRef.insertEmbed(0, 'image', downloadURL, 'user');
         // });
+        this.quillEditorRef.insertEmbed(0, 'image', file, 'user');
         return;
       } else {
         this.ngZone.run(() => {
