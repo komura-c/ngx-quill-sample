@@ -173,15 +173,17 @@ export class QuillEditorComponent implements OnInit {
       console.log(file);
       const fileSizeLimit = 3000000;
       if (file.size < fileSizeLimit) {
+        // 画像をアップロード
         // const downloadURLPromise = this.imageService.uploadImage(
         //   userId,
         //   file
         // );
+
         // insertEmbedイベントを使って画像を挿入
         // downloadURLPromise.then((downloadURL) => {
         //   this.quillEditorRef.insertEmbed(0, 'image', downloadURL, 'user');
         // });
-        this.quillEditorRef.insertEmbed(0, 'image', file, 'user');
+
         return;
       } else {
         this.ngZone.run(() => {
