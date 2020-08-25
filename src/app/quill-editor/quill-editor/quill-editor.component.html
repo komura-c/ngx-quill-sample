@@ -1,1 +1,16 @@
-<p>quill-editor works!</p>
+<quill-editor
+  formControlName="editorContent"
+  trackChanges="all"
+  [modules]="modules"
+  (onFocus)="focus($event)"
+  (onEditorChanged)="changedEditor($event)"
+  (onBlur)="blur($event)"
+  (onEditorCreated)="created($event)"
+  (onEditorCreated)="addBindingCreated($event)"
+></quill-editor>
+
+<quill-view
+  class="note-content"
+  [content]="editorContent.value"
+  format="html"
+></quill-view>

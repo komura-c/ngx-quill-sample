@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillEditorModule } from './quill-editor/quill-editor.module';
 
+import { QuillModule } from 'ngx-quill';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,6 +17,8 @@ import { QuillEditorModule } from './quill-editor/quill-editor.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     QuillEditorModule,
+
+    QuillModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
