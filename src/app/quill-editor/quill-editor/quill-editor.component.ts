@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 
@@ -9,7 +9,14 @@ import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
   styleUrls: ['./quill-editor.component.scss']
 })
 export class QuillEditorComponent implements OnInit {
-  editorContent: FormControl = new FormControl();
+  form = this.fb.group({
+    editorContent: [''],
+  });
+  get editorContentControl() {
+    return this.form.get('editorContent') as FormControl;
+  }
+  content: string;
+  text = '<h2>ダミー投稿</h2><p>2020年7月16日更新：アップデートにより使いやすくなりました。</p><h1>概要</h1><p>Lorem psum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste! Atque, magni quibusdam labore rem impedit ut, aliquam ab, debitis deserunt nemo consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste! Atque, magni quibusdam labore rem impedit ut, aliquam ab, debitis deserunt nemo consequuntur.</p><h3>イメージ</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste!</p><h2>結論</h2><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste!</p>';
 
   quillEditorRef: any;
   quillFileInput = document.createElement('input');
@@ -43,11 +50,11 @@ export class QuillEditorComponent implements OnInit {
       handlers: {
         image: (isEmit: boolean) => {
           if (isEmit) {
-            this.quillFileInput.type = 'file';
-            this.quillFileInput.accept = 'image/*';
-            this.quillFileInput.onchange = (event) => {
+            this.quillFileInput.setAttribute('type', 'file');
+            this.quillFileInput.setAttribute('accept', 'image/*');
+            this.quillFileInput.addEventListener('change', (event) => {
               this.quillFileUpload(event);
-            };
+            });
             this.quillFileInput.click();
           }
         }
@@ -58,6 +65,7 @@ export class QuillEditorComponent implements OnInit {
   focused = false;
 
   constructor(
+    private fb: FormBuilder,
     private ngZone: NgZone,
     private snackBar: MatSnackBar
   ) { }
@@ -101,6 +109,7 @@ export class QuillEditorComponent implements OnInit {
   quillFileUpload(event) {
     if (event.target.files.length) {
       const file = event.target.files[0];
+      console.log(file);
       const fileSizeLimit = 3000000;
       if (file.size < fileSizeLimit) {
         // const downloadURLPromise = this.imageService.uploadImage(

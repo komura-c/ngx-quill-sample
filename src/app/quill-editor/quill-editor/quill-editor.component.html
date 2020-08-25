@@ -1,16 +1,33 @@
-<quill-editor
-  formControlName="editorContent"
-  trackChanges="all"
-  [modules]="modules"
-  (onFocus)="focus($event)"
-  (onEditorChanged)="changedEditor($event)"
-  (onBlur)="blur($event)"
-  (onEditorCreated)="created($event)"
-  (onEditorCreated)="addBindingCreated($event)"
-></quill-editor>
-
-<quill-view
-  class="note-content"
-  [content]="editorContent.value"
-  format="html"
-></quill-view>
+<div class="container">
+  <div class="editor">
+    <h3>Editor</h3>
+    <form [formGroup]="form">
+      <quill-editor
+        formControlName="editorContent"
+        trackChanges="all"
+        [modules]="modules"
+        (onFocus)="focus($event)"
+        (onEditorChanged)="changedEditor($event)"
+        (onBlur)="blur($event)"
+        (onEditorCreated)="created($event)"
+        (onEditorCreated)="addBindingCreated($event)"
+      ></quill-editor>
+    </form>
+  </div>
+  <div class="display">
+    <h3>Output</h3>
+    <div class="innerView">
+      <div class="ql-container ql-snow" style="border-width: 0;">
+        <div class="ql-editor" [innerHTML]="editorContentControl.value"></div>
+      </div>
+    </div>
+    <h3>View</h3>
+    <div class="view">
+      <quill-view
+        class="note-content"
+        [content]="text"
+        format="html"
+      ></quill-view>
+    </div>
+  </div>
+</div>
