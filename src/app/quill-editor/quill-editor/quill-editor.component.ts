@@ -59,7 +59,6 @@ export class QuillEditorComponent implements OnInit {
 
   constructor(
     private ngZone: NgZone,
-    // private articleService: ArticleService,
     private snackBar: MatSnackBar
   ) { }
 
