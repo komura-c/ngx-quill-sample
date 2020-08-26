@@ -22,20 +22,20 @@ export class QuillEditorComponent implements OnInit {
     return this.form.get('editorContent') as FormControl;
   }
   content: string;
-  text = '<h2>ダミー投稿</h2><p>2020年7月16日更新：アップデートにより使いやすくなりました。</p><h1>概要</h1><p>Lorem psum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste! Atque, magni quibusdam labore rem impedit ut, aliquam ab, debitis deserunt nemo consequuntur.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste! Atque, magni quibusdam labore rem impedit ut, aliquam ab, debitis deserunt nemo consequuntur.</p><h3>イメージ</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste!</p><h2>結論</h2><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt explicabo quae dolorum, a laudantium totam laboriosam iste!</p>';
 
   quillEditorRef: any;
   quillFileInput = document.createElement('input');
 
   atValues = [
-    { id: 1, value: 'komura', link: 'https://google.com' },
-    { id: 2, value: 'nino' },
-    { id: 3, value: 'goto' },
-    { id: 4, value: 'saito' }
+    { id: 1, value: 'hanako', link: 'https://google.com' },
+    { id: 2, value: 'tarou' },
+    { id: 3, value: 'satoshi' },
+    { id: 4, value: 'keiko' }
   ];
   hashValues = [
-    { id: 5, value: 'komura 2' },
-    { id: 6, value: 'goto 2' }
+    { id: 5, value: 'cat' },
+    { id: 6, value: 'dog' },
+    { id: 7, value: 'music' }
   ];
 
   modules = {
@@ -63,6 +63,7 @@ export class QuillEditorComponent implements OnInit {
         ['emoji']
       ],
       handlers: {
+        // handlerはイベント自体を置き換える
         image: (isEmit: boolean) => {
           if (isEmit) {
             this.quillFileInput.setAttribute('type', 'file');

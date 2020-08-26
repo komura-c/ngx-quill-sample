@@ -15,17 +15,18 @@
     </form>
   </div>
   <div class="display">
-    <h3>Output</h3>
+    <h3>AngularInnerView</h3>
     <div class="innerView">
-      <div class="ql-container ql-snow" style="border-width: 0;">
+      <div class="ql-container ql-snow" style="border-width: 0">
         <div class="ql-editor" [innerHTML]="editorContentControl.value"></div>
       </div>
     </div>
-    <h3>View</h3>
+    <h3>QuillView</h3>
     <div class="view">
       <quill-view
         class="note-content"
-        [content]="text"
+        style="border-width: 0"
+        [content]="editorContentControl.value"
         format="html"
       ></quill-view>
     </div>
