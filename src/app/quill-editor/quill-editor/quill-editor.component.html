@@ -8,7 +8,13 @@
         [modules]="modules"
         (onEditorChanged)="changedEditor($event)"
         (onEditorCreated)="created($event)"
-      ></quill-editor>
+      >
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          (input)="uploadAndInsertImage($event)"
+          #imageInput
+      /></quill-editor>
     </form>
   </div>
   <div class="display">
@@ -25,13 +31,7 @@
         style="border-width: 0"
         [content]="editorContentControl.value"
         format="html"
-      >
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          (input)="uploadAndInsertImage($event)"
-          #imageInput
-      /></quill-view>
+      ></quill-view>
     </div>
   </div>
 </div>
