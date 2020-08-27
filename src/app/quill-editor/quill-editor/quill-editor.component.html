@@ -6,11 +6,8 @@
         formControlName="editorContent"
         trackChanges="all"
         [modules]="modules"
-        (onFocus)="focus($event)"
         (onEditorChanged)="changedEditor($event)"
-        (onBlur)="blur($event)"
         (onEditorCreated)="created($event)"
-        (onEditorCreated)="addBindingCreated($event)"
       ></quill-editor>
     </form>
   </div>
@@ -28,7 +25,13 @@
         style="border-width: 0"
         [content]="editorContentControl.value"
         format="html"
-      ></quill-view>
+      >
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          (input)="uploadAndInsertImage($event)"
+          #imageInput
+      /></quill-view>
     </div>
   </div>
 </div>
