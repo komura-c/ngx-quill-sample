@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 import 'quill-mention';
